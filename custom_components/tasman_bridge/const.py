@@ -14,7 +14,7 @@ COLOR_MAP = {
     "red": "#FF0000",
     "orange": "#FFA500",
     "yellow": "#FFD700",
-    "green": "#00FF00"
+    "green": "#00FF00",
     "cyan": "#00FFFF",
     "blue": "#0000FF",
     "violet": "#8A2BE2",
