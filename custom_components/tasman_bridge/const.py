@@ -11,13 +11,14 @@ UPDATE_INTERVAL = timedelta(hours=6)
 
 # Map government text to Hex values
 COLOR_MAP = {
-    "violet": "#8A2BE2",
-    "yellow": "#FFD700",
     "red": "#FF0000",
-    "blue": "#0000FF",
-    "cyan": "#00FFFF",
-    "rose": "#FF007F",
     "orange": "#FFA500",
+    "yellow": "#FFD700",
+    "green": "#00FF00"
+    "cyan": "#00FFFF",
+    "blue": "#0000FF",
+    "violet": "#8A2BE2",
+    "rose": "#FF007F",
     "warm white": "#FDF4DC"
 }
 
