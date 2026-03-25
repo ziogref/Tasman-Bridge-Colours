@@ -1,0 +1,11 @@
+{
+  "domain": "tasman_bridge",
+  "name": "Tasman Bridge Lighting",
+  "codeowners": ["@yourgithubusername"],
+  "config_flow": true,
+  "dependencies": ["frontend"],
+  "documentation": "https://github.com/yourgithubusername/tasman-bridge-ha",
+  "iot_class": "cloud_polling",
+  "requirements": ["beautifulsoup4==4.12.3"],
+  "version": "1.0.0"
+}
