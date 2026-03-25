@@ -4,6 +4,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.components.frontend import DATA_THEMES
 from homeassistant.helpers.event import async_track_time_change
 from homeassistant.util import dt as dt_util
+from homeassistant.helpers import device_registry as dr
 
 from .const import DOMAIN, DEFAULT_COLOR_HEX
 from .coordinator import TasmanBridgeCoordinator
@@ -17,6 +18,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = coordinator
+
+    # Register the integration as a unified Device in HA
+    device_registry = dr.async_get(hass)
+    device_registry.async_get_or_create(
+        config_entry_id=entry.entry_id,
+        identifiers={(DOMAIN, entry.entry_id)},
+        name="Tasman Bridge",
+        manufacturer="Tasmanian Government",
+        model="Lighting Schedule",
+    )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
@@ -32,12 +43,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 active_hex = event["color_hex"]
                 break
         
-        # Inject custom theme into Home Assistant
+        # Inject custom dark theme into Home Assistant
         if DATA_THEMES in hass.data:
-            # Fixed: In modern HA versions, DATA_THEMES is a dictionary itself
             hass.data[DATA_THEMES]["Tasman Bridge"] = {
                 "primary-color": active_hex,
-                "accent-color": active_hex
+                "accent-color": active_hex,
+                "primary-background-color": "#111111",
+                "card-background-color": "#1c1c1c",
+                "primary-text-color": "#FFFFFF",
+                "secondary-text-color": "#b3b3b3",
+                "app-header-background-color": "#1c1c1c",
+                "app-header-text-color": "#FFFFFF",
+                "sidebar-background-color": "#111111",
+                "sidebar-text-color": "#FFFFFF",
+                "sidebar-selected-background-color": "#2c2c2c",
+                "sidebar-selected-text-color": active_hex,
+                "paper-item-icon-color": "#FFFFFF",
+                "paper-item-icon-active-color": active_hex,
+                "divider-color": "#333333",
             }
             hass.bus.async_fire("themes_updated")
 

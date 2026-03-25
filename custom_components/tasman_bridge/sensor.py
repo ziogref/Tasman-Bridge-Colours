@@ -1,6 +1,7 @@
 """Sensor platform for Tasman Bridge."""
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN, DEFAULT_COLOR
@@ -10,20 +11,21 @@ async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
     
     entities = []
-    # Create Date, Colour, and Purpose sensors for the next 3 events
+    # Create Date, Colour, and Purpose sensors for the next 3 events, passing entry_id
     for i in range(3):
-        entities.append(TasmanBridgeSensor(coordinator, i, "date"))
-        entities.append(TasmanBridgeSensor(coordinator, i, "colour"))
-        entities.append(TasmanBridgeSensor(coordinator, i, "purpose"))
+        entities.append(TasmanBridgeSensor(coordinator, entry.entry_id, i, "date"))
+        entities.append(TasmanBridgeSensor(coordinator, entry.entry_id, i, "colour"))
+        entities.append(TasmanBridgeSensor(coordinator, entry.entry_id, i, "purpose"))
         
     async_add_entities(entities)
 
 class TasmanBridgeSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Tasman Bridge sensor."""
 
-    def __init__(self, coordinator, index, field):
+    def __init__(self, coordinator, entry_id, index, field):
         """Initialize the sensor."""
         super().__init__(coordinator)
+        self._entry_id = entry_id
         self._index = index
         self._field = field
         
@@ -32,6 +34,16 @@ class TasmanBridgeSensor(CoordinatorEntity, SensorEntity):
         self._attr_name = f"Tasman Bridge Event {event_num} {field_cap}"
         self._attr_unique_id = f"tasman_bridge_event_{event_num}_{field}"
         self._attr_icon = self._get_icon()
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Link this entity to the Tasman Bridge device."""
+        return DeviceInfo(
+            identifiers={(DOMAIN, self._entry_id)},
+            name="Tasman Bridge",
+            manufacturer="Tasmanian Government",
+            model="Lighting Schedule"
+        )
 
     def _get_icon(self):
         if self._field == "date": return "mdi:calendar"
