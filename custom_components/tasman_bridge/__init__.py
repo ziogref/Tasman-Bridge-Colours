@@ -34,8 +34,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         
         # Inject custom theme into Home Assistant
         if DATA_THEMES in hass.data:
-            theme_registry = hass.data[DATA_THEMES]
-            theme_registry.themes["Tasman Bridge"] = {
+            # Fixed: In modern HA versions, DATA_THEMES is a dictionary itself
+            hass.data[DATA_THEMES]["Tasman Bridge"] = {
                 "primary-color": active_hex,
                 "accent-color": active_hex
             }
