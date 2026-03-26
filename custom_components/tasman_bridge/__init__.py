@@ -69,17 +69,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 "sidebar-selected-background-color": "#2c2c2c",
                 "sidebar-selected-text-color": active_hex,
                 
-                # Icons
-                "paper-item-icon-color": "#FFFFFF",
+                # Icons (Fixing the blue/grey default mdi icons)
+                "state-icon-color": active_hex,
+                "state-icon-active-color": active_hex,
+                "paper-item-icon-color": active_hex,
                 "paper-item-icon-active-color": active_hex,
                 
-                # Inputs and Dropdowns (Fixes white boxes in dark theme)
+                # Inputs and Dropdowns
                 "input-fill-color": "#2c2c2c",
                 "input-dropdown-menu-background-color": "#1c1c1c",
                 "input-dropdown-menu-text-color": "#FFFFFF",
                 "input-label-outline-color": "#333333",
                 "input-text-color": "#FFFFFF",
-                "mdc-theme-surface": "#1c1c1c",  # Fixes menu surface backgrounds
+                "mdc-theme-surface": "#1c1c1c",
                 "mdc-theme-on-surface": "#FFFFFF",
                 "mdc-theme-primary": active_hex,
                 
