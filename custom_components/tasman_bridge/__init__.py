@@ -46,20 +46,44 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # Inject custom dark theme into Home Assistant
         if DATA_THEMES in hass.data:
             hass.data[DATA_THEMES]["Tasman Bridge"] = {
+                # Brand Colors
                 "primary-color": active_hex,
                 "accent-color": active_hex,
+                
+                # Backgrounds
                 "primary-background-color": "#111111",
                 "card-background-color": "#1c1c1c",
+                
+                # Text Colors
                 "primary-text-color": "#FFFFFF",
                 "secondary-text-color": "#b3b3b3",
+                "text-primary-color": "#FFFFFF",
+                
+                # Header
                 "app-header-background-color": "#1c1c1c",
                 "app-header-text-color": "#FFFFFF",
+                
+                # Sidebar
                 "sidebar-background-color": "#111111",
                 "sidebar-text-color": "#FFFFFF",
                 "sidebar-selected-background-color": "#2c2c2c",
                 "sidebar-selected-text-color": active_hex,
+                
+                # Icons
                 "paper-item-icon-color": "#FFFFFF",
                 "paper-item-icon-active-color": active_hex,
+                
+                # Inputs and Dropdowns (Fixes white boxes in dark theme)
+                "input-fill-color": "#2c2c2c",
+                "input-dropdown-menu-background-color": "#1c1c1c",
+                "input-dropdown-menu-text-color": "#FFFFFF",
+                "input-label-outline-color": "#333333",
+                "input-text-color": "#FFFFFF",
+                "mdc-theme-surface": "#1c1c1c",  # Fixes menu surface backgrounds
+                "mdc-theme-on-surface": "#FFFFFF",
+                "mdc-theme-primary": active_hex,
+                
+                # Misc
                 "divider-color": "#333333",
             }
             hass.bus.async_fire("themes_updated")
